@@ -75,10 +75,8 @@ app.get('/auth/google/callback', async (req, res) => {
     return res.status(404).json({status: 'error', message: 'Malformed google auth code'})
   }
 
-
   // Try communicate with google server and send our code in exchange for token credentials.
   try {
-
   // Get token response and set credentials in oAuthClient
   TokenResponse = await oAuth2Client.getToken(code)
   oAuth2Client.setCredentials(TokenResponse.tokens)
@@ -90,7 +88,6 @@ app.get('/auth/google/callback', async (req, res) => {
   if(!Id_token || typeof Id_token !== 'string') {
     return res.status(404).json({status: 'error', message: 'Malformed Id token code'})
   }
-
 
   // Create login ticket with id token
   const loginTicket = await oAuth2Client.verifyIdToken({
