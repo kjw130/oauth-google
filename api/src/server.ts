@@ -70,7 +70,7 @@ app.get('/auth/google/callback', async (req, res) => {
   // Read the authorization code from the query string
   const code = req.query.code;
 
-  // Check code either exists or is a string. If neither true, call error.
+  // Check code either exists or is a string. If neither true, return error.
   if(!code || typeof code !== 'string') {
     return res.status(404).json({status: 'error', message: 'Malformed google auth code'})
   }
@@ -94,18 +94,15 @@ app.get('/auth/google/callback', async (req, res) => {
     idToken: Id_token
   })
 
-  // Extract google users email, name, sub from their jwt
-  let email
-  let name
-  let sub
+  // Get user payload and confirm it exists
   const userPayload = loginTicket.getPayload()
-  if (userPayload){
-    email = userPayload.email
-    name = userPayload.name
-    sub = userPayload.sub
-  } else {
+  if (!userPayload){
     return res.status(400).json({status: "error", message: 'User payload is undefined'})
-  }
+  } 
+
+  // Assign email and sub from user payload to variables
+  const email = userPayload.email
+  const sub = userPayload.sub
 
   // Find or create user in postgres
   let selectedUser = await pool.query('SELECT id FROM users WHERE google_id = $1', [sub])  
