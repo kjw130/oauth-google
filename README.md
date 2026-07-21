@@ -4,7 +4,7 @@ A practice project demonstrating Google OAuth 2.0 login integrated with a JWT-ba
 
 ## What it does
 
-A user logs in with their Google account. The server exchanges Google's authorization code for tokens, verifies the identity token, and extracts the user's email and unique Google ID (`sub`). It then finds or creates a matching row in Postgres and issues its own signed JWT — so the rest of the app doesn't care whether a user logged in via Google or (eventually) email/password.
+A user logs in with their Google account. The server exchanges Google's authorization code for tokens, verifies the identity token, and extracts the user's email and unique Google ID (`sub`). It then finds or creates a matching row in Postgres and issues its own signed JWT, so the rest of the app doesn't care whether a user logged in via Google or (eventually) email/password.
 
 ## Tech Stack
 - TypeScript + Express
